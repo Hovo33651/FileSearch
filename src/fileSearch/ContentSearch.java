@@ -3,6 +3,7 @@ package fileSearch;
 import fileSearch.commands.Commands;
 
 import java.io.*;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class ContentSearch implements Commands {
@@ -35,13 +36,13 @@ public class ContentSearch implements Commands {
         String path = scanner.nextLine();
         File file = new File(path);
         if (file.isDirectory()) {
-            for (File listFile : file.listFiles()) {
+            for (File listFile : Objects.requireNonNull(file.listFiles())) {
                 FileReader fileReader = new FileReader(listFile);
                 BufferedReader inputStream = new BufferedReader(fileReader);
                 System.out.println("PLEASE INPUT THE WORD");
                 String word = scanner.nextLine();
                 if (inputStream.readLine().contains(word)) {
-                    System.out.println(file.getName());
+                    System.out.println(listFile.getName());
                 }
                 else{
                     System.out.println("FILE DOESN'T EXIST");
