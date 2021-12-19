@@ -49,3 +49,4 @@ public class FileSearch implements Commands {
         } else System.out.println(file.isFile());
     }
 }
+

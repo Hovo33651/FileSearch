@@ -41,13 +41,28 @@ public class ContentSearch implements Commands {
                 BufferedReader inputStream = new BufferedReader(fileReader);
                 System.out.println("PLEASE INPUT THE WORD");
                 String word = scanner.nextLine();
-                if (inputStream.readLine().contains(word)) {
+                String[] fileName = listFile.getName().split("\\.");
+                if (fileName[fileName.length - 1].equals("txt") &&
+                        inputStream.readLine().contains(word)) {
                     System.out.println(listFile.getName());
-                }
-                else{
-                    System.out.println("FILE DOESN'T EXIST");
+                } else {
+                    System.out.println("FILE WITH WORD '" + word + "' DOESN'T EXIST");
                 }
             }
+        } else if (file.isFile()) {
+            BufferedReader inputStream = new BufferedReader(new FileReader(path));
+            System.out.println("PLEASE INPUT THE WORD");
+            String word = scanner.nextLine();
+            String[] fileName = file.getName().split("\\.");
+            if (fileName[fileName.length - 1].equals("txt") &&
+                    inputStream.readLine().contains(word)) {
+                System.out.println(file.getName());
+            } else {
+                System.out.println("FILE WITH WORD '" + word + "' DOESN'T EXIST");
+            }
+        }else{
+            System.out.println("INVALID PATH");
+
         }
     }
 }
