@@ -1,8 +1,10 @@
 package fileSearch;
 
+import com.sun.org.apache.xpath.internal.SourceTree;
 import fileSearch.commands.Commands;
 
 import java.io.File;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class FileSearch implements Commands {
@@ -35,25 +37,15 @@ public class FileSearch implements Commands {
         File file = new File(scanner.nextLine());
         if (file.isDirectory()) {
             boolean exists = false;
-            for (File files : file.listFiles()) {
-                loop:
-                while (!files.isFile())
-                    for (File listFile : files.listFiles()) {
-                        if (listFile.isFile()) {
-                            System.out.println("PLEASE INPUT THE NAME OF THE FILE");
-                            String fileName = scanner.nextLine();
-                            if (listFile.getName().contains(fileName)) {
-                                exists = true;
-                                break loop;
-                            }
-                        } else continue loop;
-                    }
+            System.out.println("PLEASE INPUT THE NAME OF THE FILE");
+            String fileName = scanner.nextLine();
+            for (String s : Objects.requireNonNull(file.list())) {
+                if (s.contains(fileName)) {
+                    exists = true;
+                    break;
+                }
             }
             System.out.println(exists);
-        } else if (file.isFile()) {
-            System.out.println(true);
-        } else {
-            System.out.println(false);
-        }
+        } else System.out.println(file.isFile());
     }
 }
