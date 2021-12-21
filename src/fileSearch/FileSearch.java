@@ -38,12 +38,11 @@ public class FileSearch implements Commands {
     }
 
     private static void search(String path, String fileName) {
-        FileSearch.fileName = fileName;
         File file = new File(path);
         if (file.isDirectory()) {
             for (File listFile : Objects.requireNonNull(file.listFiles())) {
                 search(listFile.getPath(), fileName);
-                if (listFile.isFile()) {
+                if (listFile.isFile() && listFile.getName().equals(fileName)) {
                     System.out.println(listFile.getName());
                 }
             }
