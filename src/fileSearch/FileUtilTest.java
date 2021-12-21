@@ -39,11 +39,13 @@ public class FileUtilTest implements Commands {
     private static void createFile() throws IOException {
         System.out.println("PLEASE INPUT THE PATH");
         String path = scanner.nextLine();
-        System.out.println("PLEASE INPUT THE FILE NAME AND THE EXTENSION SEPARATED BY '.'");
+        System.out.println("PLEASE INPUT THE FILE NAME");
         String fileName = scanner.nextLine();
+        System.out.println("INPUT FILE EXTENSION");
+        String extension = scanner.nextLine();
         System.out.println("INPUT THE FILE CONTENT");
         String content = scanner.nextLine();
-        fileUtil.createFileWithContent(path, fileName, content);
+        fileUtil.createFileWithContent(path, fileName, content, extension);
     }
 
     private static void printSize() {

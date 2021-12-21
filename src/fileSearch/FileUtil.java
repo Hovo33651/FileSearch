@@ -42,8 +42,8 @@ public class FileUtil {
     }
 
 
-    public void createFileWithContent(String path, String fileName, String content) throws IOException {
-        File file = new File(path + "\\" + fileName);
+    public void createFileWithContent(String path, String fileName, String content, String extension) throws IOException {
+        File file = new File(path + "\\" + fileName + "." + extension);
         if (file.createNewFile()) {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(file.getAbsolutePath()))) {
                 writer.write(content);
