@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 public class FileSearch implements Commands {
     private static Scanner scanner = new Scanner(System.in);
+    private static String fileName;
 
     public static void main(String[] args) {
 
@@ -23,7 +24,11 @@ public class FileSearch implements Commands {
                     System.out.println("GOOD BYE!!!");
                     break;
                 case SEARCH:
-                    searchFile();
+                    System.out.println("PLEASE INPUT THE PATH");
+                    String path = scanner.nextLine();
+                    System.out.println("INPUT THE FILE NAME");
+                    String fileName = scanner.nextLine();
+                    search(path, fileName);
                     break;
                 default:
                     System.out.println("INVALID COMMAND");
@@ -32,21 +37,17 @@ public class FileSearch implements Commands {
         }
     }
 
-    private static void searchFile() {
-        System.out.println("PLEASE INPUT THE PATH");
-        File file = new File(scanner.nextLine());
+    private static void search(String path, String fileName) {
+        FileSearch.fileName = fileName;
+        File file = new File(path);
         if (file.isDirectory()) {
-            boolean exists = false;
-            System.out.println("PLEASE INPUT THE NAME OF THE FILE");
-            String fileName = scanner.nextLine();
-            for (String s : Objects.requireNonNull(file.list())) {
-                if (s.contains(fileName)) {
-                    exists = true;
-                    break;
+            for (File listFile : Objects.requireNonNull(file.listFiles())) {
+                search(listFile.getPath(), fileName);
+                if (listFile.isFile()) {
+                    System.out.println(listFile.getName());
                 }
             }
-            System.out.println(exists);
-        } else System.out.println(file.isFile());
+        }
     }
 }
 

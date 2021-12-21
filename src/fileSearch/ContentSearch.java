@@ -22,7 +22,11 @@ public class ContentSearch implements Commands {
                     System.out.println("GOOD BYE!!!");
                     break;
                 case SEARCH:
-                    searchContent();
+                    System.out.println("PLEASE INPUT THE PATH");
+                    String path = scanner.nextLine();
+                    System.out.println("INPUT THE WORD");
+                    String word = scanner.nextLine();
+                    searchContent(path, word);
                     break;
                 default:
                     System.out.println("INVALID COMMAND");
@@ -31,41 +35,27 @@ public class ContentSearch implements Commands {
         }
     }
 
-    private static void searchContent() throws IOException {
-        System.out.println("PLEASE INPUT THE PATH");
-        String path = scanner.nextLine();
+    private static void searchContent(String path, String word) throws IOException {
         File file = new File(path);
-        if (file.isDirectory()) {
-            for (File listFile : Objects.requireNonNull(file.listFiles())) {
-                FileReader fileReader = new FileReader(listFile);
-                BufferedReader inputStream = new BufferedReader(fileReader);
-                System.out.println("PLEASE INPUT THE WORD");
-                String word = scanner.nextLine();
-                String[] fileName = listFile.getName().split("\\.");
-                if (fileName[fileName.length - 1].equals("txt") &&
-                        inputStream.readLine().contains(word)) {
-                    System.out.println(listFile.getName());
-                } else {
-                    System.out.println("FILE WITH WORD '" + word + "' DOESN'T EXIST");
+        if (file.exists()) {
+            if (file.isDirectory()) {
+                for (File listFile : Objects.requireNonNull(file.listFiles())) {
+                    searchContent(listFile.getPath(), word);
+                    if (listFile.isFile()) {
+                        try (BufferedReader inputStream = new BufferedReader(new FileReader(listFile.getPath()))) {
+                            String line = "";
+                            while ((line = inputStream.readLine()) != null) {
+                                if (line.contains(word)) {
+                                    System.out.println("THE FILE //" + listFile.getName() + "// CONTAINS WORD /" + word + "/");
+                                    break;
+                                }
+                            }
+                        }
+                    }
                 }
             }
-        } else if (file.isFile()) {
-            BufferedReader inputStream = new BufferedReader(new FileReader(path));
-            System.out.println("PLEASE INPUT THE WORD");
-            String word = scanner.nextLine();
-            String[] fileName = file.getName().split("\\.");
-            if (fileName[fileName.length - 1].equals("txt") &&
-                    inputStream.readLine().contains(word)) {
-                System.out.println(file.getName());
-            } else {
-                System.out.println("FILE WITH WORD '" + word + "' DOESN'T EXIST");
-            }
-        }else{
-            System.out.println("INVALID PATH");
-
-        }
+        } else System.out.println("THE PATH //" + path + "// DOESN'T EXIST");
     }
 }
-
 
 

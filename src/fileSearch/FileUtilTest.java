@@ -1,9 +1,7 @@
 package fileSearch;
 
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import fileSearch.commands.Commands;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -41,11 +39,11 @@ public class FileUtilTest implements Commands {
     private static void createFile() throws IOException {
         System.out.println("PLEASE INPUT THE PATH");
         String path = scanner.nextLine();
-        System.out.println("PLEASE INPUT THE FILE NAME");
-        String fileName =  scanner.nextLine();
+        System.out.println("PLEASE INPUT THE FILE NAME AND THE EXTENSION SEPARATED BY '.'");
+        String fileName = scanner.nextLine();
         System.out.println("INPUT THE FILE CONTENT");
         String content = scanner.nextLine();
-        fileUtil.createFileWithContent(path,fileName,content);
+        fileUtil.createFileWithContent(path, fileName, content);
     }
 
     private static void printSize() {
@@ -59,6 +57,6 @@ public class FileUtilTest implements Commands {
         String path = scanner.nextLine();
         System.out.println("PLEASE INPUT THE KEYWORD");
         String keyword = scanner.nextLine();
-        fileUtil.findLines(path,keyword);
+        fileUtil.findLines(path, keyword);
     }
 }
